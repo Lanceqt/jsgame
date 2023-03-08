@@ -1,0 +1,53 @@
+:root {
+    --heart-color: rgb(255, 0, 0);
+    --coin-color: rgb(238, 255, 0);
+    --bomb-color: rgb(0, 0, 0);
+    --game-background-color: rgb(46, 48, 46);
+    --game-background-hover: rgb(234, 234, 234);
+    --menu-background-color: rgb(255, 255, 255);
+    --menu-border-color: rgb(212, 6, 6);
+}
+
+* { margin: 0; padding: 0; }
+
+html {
+    font-size: 62.5%;
+}
+
+body {
+    font-size: 1.6rem;
+}
+
+#game-board {
+    background-color: var(--game-background-color);
+    width: 100vw;
+    height: 100vh;
+}
+
+#score {
+    font-size: 3rem;
+    color: white;
+}
+
+.sprite-universals {
+    width: 5rem;
+    height: 5rem;
+    font-size: 5rem;
+}
+
+.sprite-universals:hover {
+    cursor: pointer;
+}
+
+.menu {
+    background-color: var(--menu-background-color);
+    border: var(--menu-border-color) 0.5rem solid;
+    border-radius: 1rem;
+    padding: 1rem;
+    text-align: center;
+}
+
+.menu:hover {
+    cursor: pointer;
+    background-color: var(--game-background-hover);
+}
