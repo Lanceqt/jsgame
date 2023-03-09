@@ -2,9 +2,6 @@
 const gameBoard = document.querySelector("#game-board");
 const spriteObjects = ["coin", "bomb", "heart"];
 const fragment = new DocumentFragment();
-let windowWidth = window.innerWidth;
-let windowHeight = window.innerHeight;
-gameBoard.setAttribute("style", `width: ${windowWidth}px; height: ${windowHeight}px`);
 
 function generateSprite(spriteType) {
     if (!spriteObjects.includes(spriteType)) {
@@ -28,7 +25,7 @@ function generateSprite(spriteType) {
     return addElement("div", spriteShape, "sprite-universals");
 }
 
-function addElement(injectionType, content, cssClass) {
+function addElement(injectionType, content, cssClass = 0) {
     const newElement = document.createElement(injectionType);
     newElement.classList.add(cssClass);
     newElement.innerText = content;
@@ -49,6 +46,7 @@ while(num < 10) {
     fragment.appendChild(generateSprite(generateRandomSprite(spriteObjects)));
 }
 
+addElement("h1", "Boom boom game");
 addElement("div", "Start game", "menu");
 addElement("div", "Options", "menu");
 addElement("div", "Exit game", "menu");

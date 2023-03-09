@@ -16,6 +16,7 @@ html {
 
 body {
     font-size: 1.6rem;
+    font-family: "Roboto", sans-serif;
 }
 
 #game-board {
@@ -45,6 +46,7 @@ body {
     border-radius: 1rem;
     padding: 1rem;
     text-align: center;
+    width: 50vw;
 }
 
 .menu:hover {
