@@ -38,6 +38,10 @@ function generateRandomSprite(inputArray) {
     return inputArray[randomIndex];
 }
 
+function removeSprite() {
+
+}
+
 //Note to self: DocumentFragment is for adding in sprites without reloading the entire DOM.
 //testing
 let num = 0;
@@ -47,15 +51,23 @@ while(num < 10) {
 }
 
 addElement("h1", "Boom boom game");
-addElement("div", "Start game", "menu");
-addElement("div", "Options", "menu");
-addElement("div", "Exit game", "menu");
+// addElement("div", "Start game", "menu");
+// addElement("div", "Options", "menu");
+// addElement("div", "Exit game", "menu");
+addElement("div", "Welcome challenger - Press to play", "welcome");
+
 
 gameBoard.appendChild(fragment);
-const spriteClasses = document.querySelectorAll(".sprite-universals"); //Must be after sprites have been generated
 
 //Note to self: Arrow function its like writing a function but in line instead of defining it on its own.
-spriteClasses.forEach(element => {
+document.querySelectorAll(".sprite-universals").forEach(element => {
+    element.addEventListener("click", e => {
+        console.log(e);
+        parentEl
+    });
+});
+
+document.querySelectorAll(".menu").forEach(element => {
     element.addEventListener("click", e => {
         console.log(e);
     });
