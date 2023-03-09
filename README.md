@@ -1,6 +1,7 @@
 # jsgame
 
 just a small simple game
+
 ❤️ = restores life points
 
 🪙 = awards points
