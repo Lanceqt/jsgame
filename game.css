@@ -29,6 +29,8 @@ h1 {
     color: var(--coin-color);
     text-align: center;
     margin-bottom: 1rem;
+    padding-top: 10vh;
+    user-select: none;
 }
 
 #game-board {
@@ -48,6 +50,7 @@ h1 {
     font-size: 5rem;
     position: absolute;
     top: -5.5rem;
+    user-select: none;
 
     animation: dropSprites 10s linear infinite;
 }
@@ -75,6 +78,10 @@ h1 {
 .welcome {
     color: white;
     text-align: center;
+    margin-top: 25vh;
+    animation: welcomeBlink 2s infinite;
+    display: block;
+    cursor: pointer;
 }
 
 /*  */
@@ -86,5 +93,19 @@ h1 {
   
     to {
       transform: translateY(100vh);
+    }
+  }
+
+  @keyframes welcomeBlink {
+    0% {
+      opacity: 0%;
+    }
+
+    50% {
+        opacity: 100%
+    }
+  
+    100% {
+      opacity: 0%;
     }
   }
