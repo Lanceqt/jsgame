@@ -9,9 +9,9 @@ const lifeSound = new Audio("lifegain.mp3");
 let stateController;
 
 function generateSprite(spriteType) {
-let spriteShape;
-let spriteId;
-let uniqueId = crypto.randomUUID();
+    let spriteShape;
+    let spriteId;
+    let uniqueId = crypto.randomUUID();
 
     switch(spriteType) {
         case "heart":
