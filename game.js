@@ -10,6 +10,7 @@ let stateController;
 
 function generateSprite(spriteType) {
     let spriteShape;
+    let randomPos = Math.floor(Math.random() * (2 - 95 + 1)) + 95;
     const spriteId = crypto.randomUUID();
 
     switch(spriteType) {
@@ -25,17 +26,17 @@ function generateSprite(spriteType) {
         default:
             throw new Error(`${spriteType} is not a type of sprite`);
     }
-
-    return addElement("div", spriteShape, spriteId, "sprite-universals");
+    return addElement("div", spriteShape, spriteId, "sprite-universals", "left", `${randomPos}vw`);
 }
 
-function addElement(injectionType, content, elementId, cssClass, cssInline) {
+function addElement(injectionType, content, elementId, cssClass, cssInlineProp, cssInlineValue) {
     let nullCssClass = cssClass ?? "default";
-    let nullInline = cssInline ?? "default";
+    let nullInlineProp = cssInlineProp ?? "default";
+    let nullCssInlineValue = cssInlineValue ?? "default";
 
     const newElement = document.createElement(injectionType);
     newElement.classList.add(nullCssClass);
-    // newElement.style.
+    newElement.style.setProperty(nullInlineProp, nullCssInlineValue);
     newElement.innerText = content;
     newElement.setAttribute("data-id", `${elementId}`);
     gameBoard.appendChild(newElement);
@@ -91,20 +92,16 @@ function generateGameState() {
             console.log(stateController);
             console.log(e);
         });
-        // document.querySelectorAll(".menu").forEach(element => {
-        //     element.addEventListener("click", e => {
-        //         console.log(e);
-        //     });
-        // });
     }
 
     function gameScreen() {
         let num = 0;
+        let score = 0;
         removeElement('[data-id="title"]','[data-id="start-game"]', '[data-id="options"]', '[data-id="exit-game"]');
-        fragment.appendChild(addElement("div", `Score: 12430`, "score", "score"));
+        fragment.appendChild(addElement("div", `Score: ${score}`, "score", "score"));
         fragment.appendChild(addElement("div", `❤️ ❤️ ❤️ ❤️ ❤️`, "life-total", "life-total"));
 
-        while(num < 10) {
+        while(num < 100) {
             num++;
             fragment.appendChild(generateSprite(generateRandomSprite(spriteObjects)));
         }
@@ -115,6 +112,9 @@ function generateGameState() {
                 let spriteUid = e.target.getAttribute("data-id");
                 console.log(spriteUid);
                 removeElement(`[data-id="${spriteUid}"]`);
+                fragment.appendChild(generateSprite(generateRandomSprite(spriteObjects)));
+                fragment.appendChild(generateSprite(generateRandomSprite(spriteObjects)));
+                gameBoard.appendChild(fragment);
             });
         });
     }
