@@ -33,9 +33,12 @@ function generateSprite(spriteType) {
     return addElement("div", spriteShape, spriteId, "sprite-universals");
 }
 
-function addElement(injectionType, content, elementId, cssClass = 0) {
+function addElement(injectionType, content, elementId, cssClass, cssInline) {
+    let nullCssClass = cssClass ?? "default";
+    let nullInline = cssInline ?? "default";
+
     const newElement = document.createElement(injectionType);
-    newElement.classList.add(cssClass);
+    newElement.classList.add(nullCssClass);
     newElement.innerText = content;
     newElement.setAttribute("data-id", `${elementId}`);
     gameBoard.appendChild(newElement);
@@ -57,7 +60,7 @@ function generateRandomSprite(inputArray) {
 
 function generateGameState() {
     function startingScreen() {
-        addElement("h1", "Clicky boom game", "title",);
+        addElement("h1", "Clicky boom game", "title");
         addElement("div", "Welcome challenger - Press to play", "press-start", "welcome");
         //Note to self: Arrow function its like writing a function but in line instead of defining it on its own.
         //There is a difference with how the this JS function works in an arrow function VS normal function 

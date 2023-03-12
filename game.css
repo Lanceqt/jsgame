@@ -50,6 +50,7 @@ h1 {
     height: 5rem;
     font-size: 5rem;
     position: absolute;
+    left: 0;
     top: -5.5rem;
     user-select: none;
 
@@ -69,6 +70,7 @@ h1 {
     width: 50vw;
     margin: 0 auto;
     margin-bottom: 3rem;
+    user-select: none;
 }
 
 .menu:hover {
