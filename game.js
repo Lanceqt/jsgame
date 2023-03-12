@@ -101,7 +101,7 @@ function generateGameState() {
         fragment.appendChild(addElement("div", `Score: ${score}`, "score", "score"));
         fragment.appendChild(addElement("div", `❤️ ❤️ ❤️ ❤️ ❤️`, "life-total", "life-total"));
 
-        while(num < 100) {
+        while(num < 20) {
             num++;
             fragment.appendChild(generateSprite(generateRandomSprite(spriteObjects)));
         }
