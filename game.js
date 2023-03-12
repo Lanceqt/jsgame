@@ -42,8 +42,12 @@ function addElement(injectionType, content, elementId, cssClass = 0) {
     return newElement;
 }
 
-function removeElement(elementSelector) {
-    document.querySelector(elementSelector).remove();
+function removeElement(...elementSelectors) {
+    elementSelectors.forEach(selector => {
+        document.querySelectorAll(selector).forEach(element => {
+            element.remove();
+        });
+    });
 }
 
 function generateRandomSprite(inputArray) {
@@ -89,10 +93,7 @@ function generateGameState() {
         let num = 0;
         console.log("game screen is run")
         console.log(num);
-        removeElement('[data-id="title"]');
-        removeElement('[data-id="start-game"]');
-        removeElement('[data-id="options"]');
-        removeElement('[data-id="exit-game"]');
+        removeElement('[data-id="title"]','[data-id="start-game"]', '[data-id="options"]', '[data-id="exit-game"]');
 
         while(num < 10) {
             num++;
