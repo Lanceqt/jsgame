@@ -10,21 +10,17 @@ let stateController;
 
 function generateSprite(spriteType) {
     let spriteShape;
-    let spriteId;
-    let uniqueId = crypto.randomUUID();
+    const spriteId = crypto.randomUUID();
 
     switch(spriteType) {
         case "heart":
             spriteShape = "❤️";
-            spriteId = uniqueId;
             break;
         case "coin":
             spriteShape = "🪙";
-            spriteId = uniqueId;
             break;
         case "bomb":
             spriteShape = "💣";
-            spriteId = uniqueId;
             break;
         default:
             throw new Error(`${spriteType} is not a type of sprite`);
@@ -39,6 +35,7 @@ function addElement(injectionType, content, elementId, cssClass, cssInline) {
 
     const newElement = document.createElement(injectionType);
     newElement.classList.add(nullCssClass);
+    // newElement.style.
     newElement.innerText = content;
     newElement.setAttribute("data-id", `${elementId}`);
     gameBoard.appendChild(newElement);
@@ -60,8 +57,9 @@ function generateRandomSprite(inputArray) {
 
 function generateGameState() {
     function startingScreen() {
-        addElement("h1", "Clicky boom game", "title");
-        addElement("div", "Welcome challenger - Press to play", "press-start", "welcome");
+        fragment.appendChild(addElement("h1", "Clicky boom game", "title"));
+        fragment.appendChild(addElement("div", "Welcome challenger - Press to play", "press-start", "welcome"));
+        gameBoard.appendChild(fragment);
         //Note to self: Arrow function its like writing a function but in line instead of defining it on its own.
         //There is a difference with how the this JS function works in an arrow function VS normal function 
         //I am not sure I understand that exactly yet.
@@ -75,12 +73,20 @@ function generateGameState() {
 
     function menuScreen() {
         removeElement(".welcome");
-        addElement("div", "Start game", "start-game", "menu");
-        addElement("div", "Options", "options", "menu");
-        addElement("div", "Exit game", "exit-game", "menu");
+        fragment.appendChild(addElement("div", "Start game", "start-game", "menu"));
+        fragment.appendChild(addElement("div", "Options", "options", "menu"));
+        fragment.appendChild(addElement("div", "Exit game", "exit-game", "menu"));
+        gameBoard.appendChild(fragment);
 
         document.querySelector('[data-id="start-game"]').addEventListener("click", e =>{
             stateController = "gameScreen";
+            generateGameState();
+            console.log(stateController);
+            console.log(e);
+        });
+
+        document.querySelector('[data-id="exit-game"]').addEventListener("click", e =>{
+            stateController;
             generateGameState();
             console.log(stateController);
             console.log(e);
@@ -94,23 +100,23 @@ function generateGameState() {
 
     function gameScreen() {
         let num = 0;
-        console.log("game screen is run")
-        console.log(num);
         removeElement('[data-id="title"]','[data-id="start-game"]', '[data-id="options"]', '[data-id="exit-game"]');
+        fragment.appendChild(addElement("div", `Score: 12430`, "score", "score"));
+        fragment.appendChild(addElement("div", `❤️ ❤️ ❤️ ❤️ ❤️`, "life-total", "life-total"));
 
         while(num < 10) {
             num++;
             fragment.appendChild(generateSprite(generateRandomSprite(spriteObjects)));
-            console.log(num);
         }
-        document.querySelectorAll(".sprite-universals").forEach(element => {
-            element.addEventListener("click", e => {
-                console.log(e);
-                pointSound.play();
-            });
-        });
         //Note to self: DocumentFragment is for adding in sprites without reloading the entire DOM.
         gameBoard.appendChild(fragment);
+        document.querySelectorAll(".sprite-universals").forEach(element => {
+            element.addEventListener("click", e => {
+                let spriteUid = e.target.getAttribute("data-id");
+                console.log(spriteUid);
+                removeElement(`[data-id="${spriteUid}"]`);
+            });
+        });
     }
 
     function gameOver() {
