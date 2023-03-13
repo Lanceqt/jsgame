@@ -48,12 +48,12 @@ h1 {
 .sprite-universals {
     width: 5rem;
     height: 5rem;
-    font-size: 5rem;
+    font-size: 8rem;
     position: absolute;
     top: -5.5rem;
     user-select: none;
 
-    animation: dropSprites 10s linear infinite;
+    animation: dropSprites 4s linear infinite;
 }
 
 .sprite-universals:hover {
@@ -86,10 +86,17 @@ h1 {
     cursor: pointer;
 }
 
-.score, .life-total {
+.score, .countdown {
     float: right;
     color: white;
-    font-size: 2.2rem;
+    font-size: 2rem;
+    user-select: none;
+}
+
+.life-total {
+    float: right;
+    font-size: 3.5rem;
+    user-select: none;
 }
 
 /*  */
@@ -116,4 +123,4 @@ h1 {
     100% {
       opacity: 0%;
     }
-  }
+  } 

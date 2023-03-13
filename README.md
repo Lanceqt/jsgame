@@ -9,3 +9,7 @@ just a small simple game
 💣 = lose life points
 
 Get to the score goal before time runs out or you blow yourself up.
+
+# TODO
+
+Add timer, point & life function.

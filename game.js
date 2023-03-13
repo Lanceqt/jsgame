@@ -29,6 +29,11 @@ function generateSprite(spriteType) {
     return addElement("div", spriteShape, spriteId, "sprite-universals", "left", `${randomPos}vw`);
 }
 
+function generateRandomSprite(inputArray) {
+    const randomIndex = Math.floor(Math.random() * inputArray.length);
+    return inputArray[randomIndex];
+}
+
 function addElement(injectionType, content, elementId, cssClass, cssInlineProp, cssInlineValue) {
     let nullCssClass = cssClass ?? "default";
     let nullInlineProp = cssInlineProp ?? "default";
@@ -49,11 +54,6 @@ function removeElement(...elementSelectors) {
             element.remove();
         });
     });
-}
-
-function generateRandomSprite(inputArray) {
-    const randomIndex = Math.floor(Math.random() * inputArray.length);
-    return inputArray[randomIndex];
 }
 
 function generateGameState() {
@@ -87,10 +87,11 @@ function generateGameState() {
         });
 
         document.querySelector('[data-id="exit-game"]').addEventListener("click", e =>{
-            stateController;
-            generateGameState();
+            removeElement('[data-id="title"]', '[data-id="start-game"]', '[data-id="options"]', '[data-id="exit-game"]');
+            stateController = "default";
             console.log(stateController);
-            console.log(e);
+            menuMusic.pause();
+            generateGameState();
         });
     }
 
@@ -98,8 +99,10 @@ function generateGameState() {
         let num = 0;
         let score = 0;
         removeElement('[data-id="title"]','[data-id="start-game"]', '[data-id="options"]', '[data-id="exit-game"]');
-        fragment.appendChild(addElement("div", `Score: ${score}`, "score", "score"));
         fragment.appendChild(addElement("div", `❤️ ❤️ ❤️ ❤️ ❤️`, "life-total", "life-total"));
+        fragment.appendChild(addElement("div", `Score: ${score}`, "score", "score"));
+        fragment.appendChild(addElement("div", `Time: 60s `, "countdown", "countdown"));
+
 
         while(num < 20) {
             num++;
@@ -121,6 +124,10 @@ function generateGameState() {
 
     function gameOver() {
         addElement("h1", "GAME OVER!", "h1")
+    }
+
+    function options() {
+        addElement("div", "Mute music", "mute-music", "mute-music");
     }
 
     switch(stateController) {
