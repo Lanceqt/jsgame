@@ -52,6 +52,7 @@ h1 {
     position: absolute;
     top: -5.5rem;
     user-select: none;
+    z-index: 1;
 
     animation: dropSprites 3s linear infinite;
 }
@@ -93,6 +94,7 @@ h1 {
     user-select: none;
     margin-right: 1rem;
     margin-left: 1rem;
+    z-index: 2;
 }
 
 .life-total {
@@ -100,6 +102,7 @@ h1 {
     font-size: 3.5rem;
     user-select: none;
     margin-right: 1rem;
+    z-index: 2;
 }
 
 /*  */

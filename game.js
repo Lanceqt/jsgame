@@ -8,6 +8,7 @@ const bombSound = new Audio("bomb.wav");
 const pointSound = new Audio("point.mp3");
 const lifeSound = new Audio("lifegain.mp3");
 let stateController;
+let lifeTotal = 5;
 
 function generateSprite(spriteType) {
     let spriteShape;
@@ -103,6 +104,13 @@ function generateGameState() {
             generateGameState();
         }, 61 * 1000);
 
+        const lifeController = () => {
+            if (lifeTotal === 0) {
+                stateController = "gameOver";
+                generateGameState();
+            }
+        };
+
         removeElement('[data-id="title"]','[data-id="start-game"]', '[data-id="exit-game"]');
         fragment.appendChild(addElement("div", `Time: ${timeLeft} `, "countdown", "countdown"));
         fragment.appendChild(addElement("div", `Score: ${score} / 1000`, "score", "score"));
@@ -123,8 +131,28 @@ function generateGameState() {
             const targetSprite = event.target;
             if (targetSprite.classList.contains("sprite-universals")) {
                 let spriteUId = targetSprite.getAttribute("data-id");
+                let spriteContent = document.querySelector(`[data-id="${spriteUId}"`);
+                spriteContent = spriteContent.innerText;
+                switch (spriteContent) {
+                    case "❤️":
+                        lifeSound.play();
+                        break;
+                    case "🪙":
+                        pointSound.play();
+                        break;
+                    case "💣":
+                        bombSound.play();
+                        lifeTotal--;
+                        console.log(lifeTotal);
+                        lifeController();
+                        break;
+                    default:
+                        console.log("default");
+                }
+                console.log(spriteContent);
+                console.log(spriteUId);
+
                 removeElement(`[data-id="${spriteUId}"`);
-                
                 const numberOfSprites = 2;
 
                 for (let i = 0; i < numberOfSprites; i++) {
@@ -141,32 +169,31 @@ function generateGameState() {
         removeElement(`.sprite-universals`, `[data-id="life-total"]`, `[data-id="score"]`, `[data-id="countdown"]`);
         menuMusic.pause();
         addElement("h1", "GAME OVER!", "h1");
-        addElement(`div`, `Back to menu`, `back`, `welcome`);
-        document.querySelector(`[data-id="back"]`).addEventListener("click", e => {
-            menuMusic.play();
-            menuMusic.loop = true;
-            removeElement(`[data-id="h1"]`, `[data-id="back"]`,);
-            fragment.appendChild(addElement("h1", "Clicky boom game", "title"));
-            stateController = "menuScreen";
-            generateGameState();
-        });
+        // addElement(`div`, `Back to menu`, `back`, `welcome`);
+        // document.querySelector(`[data-id="back"]`).addEventListener("click", e => {
+        //     menuMusic.play();
+        //     menuMusic.loop = true;
+        //     removeElement(`[data-id="h1"]`, `[data-id="back"]`,);
+        //     fragment.appendChild(addElement("h1", "Clicky boom game", "title"));
+        //     stateController = "menuScreen";
+        //     generateGameState();
+        // });
 
     }    
     switch(stateController) {
         case "menuScreen":
             menuScreen();
             break;
-
         case "gameOver":
             gameOver();
             break;
-
         case "gameScreen":
             gameScreen();
             break;
-
         default:
             startingScreen();
+            console.log(stateController);
+            console.log("it went to default")
             break;
     }
 }
