@@ -98,11 +98,23 @@ function generateGameState() {
     function gameScreen() {
         let num = 0;
         let score = 0;
+        let timeLeft = 60;
+
+        setTimeout(() => {
+            clearInterval(countdown);
+            stateController = "gameOver";
+            generateGameState();
+        }, 61 * 1000);
+
         removeElement('[data-id="title"]','[data-id="start-game"]', '[data-id="options"]', '[data-id="exit-game"]');
         fragment.appendChild(addElement("div", `❤️ ❤️ ❤️ ❤️ ❤️`, "life-total", "life-total"));
         fragment.appendChild(addElement("div", `Score: ${score}`, "score", "score"));
-        fragment.appendChild(addElement("div", `Time: 60s `, "countdown", "countdown"));
+        fragment.appendChild(addElement("div", `Time: ${timeLeft} `, "countdown", "countdown"));
 
+        const countdown = setInterval(() => {
+            timeLeft--;
+            document.querySelector(`[data-id="countdown"]`).innerText = `Time: ${timeLeft}`;
+        }, 1000);
 
         while(num < 20) {
             num++;
@@ -123,7 +135,19 @@ function generateGameState() {
     }
 
     function gameOver() {
-        addElement("h1", "GAME OVER!", "h1")
+        removeElement(`.sprite-universals`, `[data-id="life-total"]`, `[data-id="score"]`, `[data-id="countdown"]`);
+        menuMusic.pause();
+        addElement("h1", "GAME OVER!", "h1");
+        addElement(`div`, `Back to menu`, `back`, `welcome`);
+        document.querySelector(`[data-id="back"]`).addEventListener("click", e => {
+            menuMusic.play();
+            menuMusic.loop = true;
+            removeElement(`[data-id="h1"]`, `[data-id="back"]`,);
+            fragment.appendChild(addElement("h1", "Clicky boom game", "title"));
+            stateController = "menuScreen";
+            generateGameState();
+        });
+
     }
 
     function options() {
