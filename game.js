@@ -2,6 +2,7 @@
 const gameBoard = document.querySelector("#game-board");
 const spriteObjects = ["coin", "bomb", "heart"];
 const fragment = new DocumentFragment();
+//Note to self: DocumentFragment is for adding in sprites without reloading the entire DOM.
 const menuMusic = new Audio("menu.mp3");
 const bombSound = new Audio("bomb.wav");
 const pointSound = new Audio("point.mp3");
@@ -75,21 +76,17 @@ function generateGameState() {
     function menuScreen() {
         removeElement(".welcome");
         fragment.appendChild(addElement("div", "Start game", "start-game", "menu"));
-        fragment.appendChild(addElement("div", "Options", "options", "menu"));
         fragment.appendChild(addElement("div", "Exit game", "exit-game", "menu"));
         gameBoard.appendChild(fragment);
 
         document.querySelector('[data-id="start-game"]').addEventListener("click", e =>{
             stateController = "gameScreen";
             generateGameState();
-            console.log(stateController);
-            console.log(e);
         });
 
         document.querySelector('[data-id="exit-game"]').addEventListener("click", e =>{
-            removeElement('[data-id="title"]', '[data-id="start-game"]', '[data-id="options"]', '[data-id="exit-game"]');
+            removeElement('[data-id="title"]', '[data-id="start-game"]', '[data-id="exit-game"]');
             stateController = "default";
-            console.log(stateController);
             menuMusic.pause();
             generateGameState();
         });
@@ -106,10 +103,10 @@ function generateGameState() {
             generateGameState();
         }, 61 * 1000);
 
-        removeElement('[data-id="title"]','[data-id="start-game"]', '[data-id="options"]', '[data-id="exit-game"]');
-        fragment.appendChild(addElement("div", `❤️ ❤️ ❤️ ❤️ ❤️`, "life-total", "life-total"));
-        fragment.appendChild(addElement("div", `Score: ${score}`, "score", "score"));
+        removeElement('[data-id="title"]','[data-id="start-game"]', '[data-id="exit-game"]');
         fragment.appendChild(addElement("div", `Time: ${timeLeft} `, "countdown", "countdown"));
+        fragment.appendChild(addElement("div", `Score: ${score} / 1000`, "score", "score"));
+        fragment.appendChild(addElement("div", `❤️ ❤️ ❤️ ❤️ ❤️`, "life-total", "life-total"));
 
         const countdown = setInterval(() => {
             timeLeft--;
@@ -120,18 +117,24 @@ function generateGameState() {
             num++;
             fragment.appendChild(generateSprite(generateRandomSprite(spriteObjects)));
         }
-        //Note to self: DocumentFragment is for adding in sprites without reloading the entire DOM.
+
         gameBoard.appendChild(fragment);
-        document.querySelectorAll(".sprite-universals").forEach(element => {
-            element.addEventListener("click", e => {
-                let spriteUid = e.target.getAttribute("data-id");
-                console.log(spriteUid);
-                removeElement(`[data-id="${spriteUid}"]`);
-                fragment.appendChild(generateSprite(generateRandomSprite(spriteObjects)));
-                fragment.appendChild(generateSprite(generateRandomSprite(spriteObjects)));
+        function handleSpriteClick(event){
+            const targetSprite = event.target;
+            if (targetSprite.classList.contains("sprite-universals")) {
+                let spriteUId = targetSprite.getAttribute("data-id");
+                removeElement(`[data-id="${spriteUId}"`);
+                
+                const numberOfSprites = 2;
+
+                for (let i = 0; i < numberOfSprites; i++) {
+                    const newSprite = generateSprite(generateRandomSprite(spriteObjects));
+                    fragment.appendChild(newSprite);
+                }
                 gameBoard.appendChild(fragment);
-            });
-        });
+            }
+        }
+        gameBoard.addEventListener("click", handleSpriteClick);
     }
 
     function gameOver() {
@@ -148,12 +151,7 @@ function generateGameState() {
             generateGameState();
         });
 
-    }
-
-    function options() {
-        addElement("div", "Mute music", "mute-music", "mute-music");
-    }
-
+    }    
     switch(stateController) {
         case "menuScreen":
             menuScreen();
@@ -167,8 +165,6 @@ function generateGameState() {
             gameScreen();
             break;
 
-        case "options":
-            options();
         default:
             startingScreen();
             break;

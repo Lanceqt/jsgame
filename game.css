@@ -53,7 +53,7 @@ h1 {
     top: -5.5rem;
     user-select: none;
 
-    animation: dropSprites 4s linear infinite;
+    animation: dropSprites 3s linear infinite;
 }
 
 .sprite-universals:hover {
@@ -87,16 +87,19 @@ h1 {
 }
 
 .score, .countdown {
-    float: right;
+    float: left;
     color: white;
     font-size: 2rem;
     user-select: none;
+    margin-right: 1rem;
+    margin-left: 1rem;
 }
 
 .life-total {
     float: right;
     font-size: 3.5rem;
     user-select: none;
+    margin-right: 1rem;
 }
 
 /*  */
