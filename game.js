@@ -143,18 +143,18 @@ function generateGameState() {
                     case "💣":
                         bombSound.play();
                         lifeTotal--;
-                        console.log(lifeTotal);
                         lifeController();
                         break;
                     default:
                         console.log("default");
                 }
-                console.log(spriteContent);
-                console.log(spriteUId);
 
                 removeElement(`[data-id="${spriteUId}"`);
                 const numberOfSprites = 2;
-
+                if (lifeTotal === 0) {
+                    clearInterval(countdown);
+                    return;
+                }
                 for (let i = 0; i < numberOfSprites; i++) {
                     const newSprite = generateSprite(generateRandomSprite(spriteObjects));
                     fragment.appendChild(newSprite);
@@ -169,15 +169,15 @@ function generateGameState() {
         removeElement(`.sprite-universals`, `[data-id="life-total"]`, `[data-id="score"]`, `[data-id="countdown"]`);
         menuMusic.pause();
         addElement("h1", "GAME OVER!", "h1");
-        // addElement(`div`, `Back to menu`, `back`, `welcome`);
-        // document.querySelector(`[data-id="back"]`).addEventListener("click", e => {
-        //     menuMusic.play();
-        //     menuMusic.loop = true;
-        //     removeElement(`[data-id="h1"]`, `[data-id="back"]`,);
-        //     fragment.appendChild(addElement("h1", "Clicky boom game", "title"));
-        //     stateController = "menuScreen";
-        //     generateGameState();
-        // });
+        addElement(`div`, `Back to menu`, `back`, `welcome`);
+        document.querySelector(`[data-id="back"]`).addEventListener("click", e => {
+            menuMusic.play();
+            menuMusic.loop = true;
+            removeElement(`[data-id="h1"]`, `[data-id="back"]`,);
+            fragment.appendChild(addElement("h1", "Clicky boom game", "title"));
+            stateController = "menuScreen";
+            return generateGameState();
+        });
 
     }    
     switch(stateController) {
@@ -196,5 +196,6 @@ function generateGameState() {
             console.log("it went to default")
             break;
     }
+    return;
 }
 generateGameState();
