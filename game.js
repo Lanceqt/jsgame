@@ -1,63 +1,10 @@
 "use strict";
-const gameBoard = document.querySelector("#game-board");
-const spriteObjects = ["coin", "bomb", "heart"];
-const fragment = new DocumentFragment();
-//Note to self: DocumentFragment is for adding in sprites without reloading the entire DOM.
-const menuMusic = new Audio("menu.mp3");
-const bombSound = new Audio("bomb.wav");
-const pointSound = new Audio("point.mp3");
-const lifeSound = new Audio("lifegain.mp3");
+import { addElement, removeElement } from "./js/elementHandlers.js";
+import { generateSprite, generateRandomSprite, handleSpriteClick, spriteObjects } from "./js/sprites.js";
+import { gameBoard, menuMusic, fragment } from "./js/universals.js";
 let stateController;
 let lifeTotal = 5;
-
-function generateSprite(spriteType) {
-    let spriteShape;
-    let randomPos = Math.floor(Math.random() * (2 - 95 + 1)) + 95;
-    const spriteId = crypto.randomUUID();
-
-    switch(spriteType) {
-        case "heart":
-            spriteShape = "❤️";
-            break;
-        case "coin":
-            spriteShape = "🪙";
-            break;
-        case "bomb":
-            spriteShape = "💣";
-            break;
-        default:
-            throw new Error(`${spriteType} is not a type of sprite`);
-    }
-    return addElement("div", spriteShape, spriteId, "sprite-universals", "left", `${randomPos}vw`);
-}
-
-function generateRandomSprite(inputArray) {
-    const randomIndex = Math.floor(Math.random() * inputArray.length);
-    return inputArray[randomIndex];
-}
-
-function addElement(injectionType, content, elementId, cssClass, cssInlineProp, cssInlineValue) {
-    let nullCssClass = cssClass ?? "default";
-    let nullInlineProp = cssInlineProp ?? "default";
-    let nullCssInlineValue = cssInlineValue ?? "default";
-
-    const newElement = document.createElement(injectionType);
-    newElement.classList.add(nullCssClass);
-    newElement.style.setProperty(nullInlineProp, nullCssInlineValue);
-    newElement.innerText = content;
-    newElement.setAttribute("data-id", `${elementId}`);
-    gameBoard.appendChild(newElement);
-    return newElement;
-}
-
-function removeElement(...elementSelectors) {
-    elementSelectors.forEach(selector => {
-        document.querySelectorAll(selector).forEach(element => {
-            element.remove();
-        });
-    });
-}
-
+//Note to self: DocumentFragment is for adding in sprites without reloading the entire DOM.
 function generateGameState() {
     function startingScreen() {
         fragment.appendChild(addElement("h1", "Clicky boom game", "title"));
@@ -99,7 +46,6 @@ function generateGameState() {
         let timeLeft = 60;
 
         setTimeout(() => {
-            clearInterval(countdown);
             stateController = "gameOver";
             generateGameState();
         }, 61 * 1000);
@@ -127,41 +73,6 @@ function generateGameState() {
         }
 
         gameBoard.appendChild(fragment);
-        function handleSpriteClick(event){
-            const targetSprite = event.target;
-            if (targetSprite.classList.contains("sprite-universals")) {
-                let spriteUId = targetSprite.getAttribute("data-id");
-                let spriteContent = document.querySelector(`[data-id="${spriteUId}"`);
-                spriteContent = spriteContent.innerText;
-                switch (spriteContent) {
-                    case "❤️":
-                        lifeSound.play();
-                        break;
-                    case "🪙":
-                        pointSound.play();
-                        break;
-                    case "💣":
-                        bombSound.play();
-                        lifeTotal--;
-                        lifeController();
-                        break;
-                    default:
-                        console.log("default");
-                }
-
-                removeElement(`[data-id="${spriteUId}"`);
-                const numberOfSprites = 2;
-                if (lifeTotal === 0) {
-                    clearInterval(countdown);
-                    return;
-                }
-                for (let i = 0; i < numberOfSprites; i++) {
-                    const newSprite = generateSprite(generateRandomSprite(spriteObjects));
-                    fragment.appendChild(newSprite);
-                }
-                gameBoard.appendChild(fragment);
-            }
-        }
         gameBoard.addEventListener("click", handleSpriteClick);
     }
 
@@ -170,13 +81,14 @@ function generateGameState() {
         menuMusic.pause();
         addElement("h1", "GAME OVER!", "h1");
         addElement(`div`, `Back to menu`, `back`, `welcome`);
+        clearTimeout();
         document.querySelector(`[data-id="back"]`).addEventListener("click", e => {
             menuMusic.play();
             menuMusic.loop = true;
             removeElement(`[data-id="h1"]`, `[data-id="back"]`,);
             fragment.appendChild(addElement("h1", "Clicky boom game", "title"));
             stateController = "menuScreen";
-            return generateGameState();
+            generateGameState();
         });
 
     }    
