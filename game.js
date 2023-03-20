@@ -1,5 +1,5 @@
 import { isValidHtmlTag } from "./js/jsonParser.js";
-import { createElement } from "./js/elementHandlers.js";
+import { createElement, addToDOM } from "./js/elementHandlers.js";
 // import { addElement, removeElement } from "./js/elementHandlers.js";
 // import { generateSprite, generateRandomSprite, handleSpriteClick } from "./js/sprites.js";
 // import { menuMusic } from "./js/audio.js";
@@ -8,4 +8,7 @@ import { createElement } from "./js/elementHandlers.js";
 
 // gameState.changeState("renderStartingScreen");
 
-createElement("div", "something inside the element", "id", undefined, undefined, undefined);
+const testElement =  await createElement("div", "element 1");
+const testElement2 = await createElement("div", "element 2");
+const parentElement = document.querySelector("#game-board");
+addToDOM(parentElement, [testElement, testElement2]);
