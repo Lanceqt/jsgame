@@ -1,9 +1,6 @@
 import { addElement, removeElement } from "./elementHandlers.js";
-import { gameBoard, fragment } from "./universals.js";
-const bombSound = new Audio("../sounds/bomb.wav");
-const pointSound = new Audio("../sounds/point.mp3");
-const lifeSound = new Audio("../sounds/lifegain.mp3");
-export const spriteObjects = ["coin", "bomb", "heart"];
+import { gameBoard } from "./universals.js";
+const spriteObjects = ["coin", "bomb", "heart"];
 
 export function generateSprite(spriteType) {
     let spriteShape;

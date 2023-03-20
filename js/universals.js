@@ -1,3 +1,3 @@
 export const gameBoard = document.querySelector("#game-board");
-export const menuMusic = new Audio("./sounds/menu.mp3");
+//Note to self: DocumentFragment is for adding in sprites without reloading the entire DOM.
 export const fragment = new DocumentFragment();
