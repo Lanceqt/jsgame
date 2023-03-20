@@ -1,38 +1,51 @@
 import { isValidHtmlTag } from "./jsonParser.js";
 
-export async function createElement(elementType, content, elementId, CSSClass, CSSInlineProp, CSSInlineValue) {
-    if(!await isValidHtmlTag(elementType)) {
-        throw new Error(`elementType is required to create an element it is currently set to "${elementType}"`+
-        ` it has to be a valid html tag`);
-    };
+export async function createElement(
+    elementType,
+    content,
+    elementId,
+    CSSClass,
+    CSSInlineProp,
+    CSSInlineValue
+) {
+    if (!(await isValidHtmlTag(elementType))) {
+        throw new Error(
+            `elementType is required to create an element it is currently set to "${elementType}"it has to be a valid html tag`
+        );
+    }
     const newElement = document.createElement(elementType);
 
     // ...(if condition is true then {propertyName: value} else {})
     // ...(condition ? {propertyName: value} else {empty object})
+    // ...(if both conditions are true, then {propertyName: {key: value}} else {})
+    // ...(condition1 && condition2 ? {propertyName: {[key]: value}} : {empty})
+
     Object.assign(newElement, {
-        ...(content ? {innerText: content} : {}),
-        ...(CSSClass ? {className: CSSClass} : {}),
-        ...(CSSInlineProp && CSSInlineValue ? {style: {[CSSInlineProp]:CSSInlineValue}} : {})
+        ...(content ? { innerText: content } : {}),
+        ...(CSSClass ? { className: CSSClass } : {}),
+        ...(CSSInlineProp && CSSInlineValue ? { style: { [CSSInlineProp]: CSSInlineValue } } : {}),
     });
-    if (elementId) {newElement.dataset.id = elementId};
+    if (elementId) {
+        newElement.dataset.id = elementId;
+    }
     // console.log(newElement.outerHTML);
     return newElement;
-};
+}
 
-export function addToDOM(parentElement, childElement){
+export function addToDOM(parentElement, childElement) {
     const fragment = new DocumentFragment();
 
-    childElement.forEach(childElement => {
+    childElement.forEach((childElement) => {
         fragment.appendChild(childElement);
     });
-    
+
     parentElement.appendChild(fragment);
-};
+}
 
 export function removeElement(...elementSelectors) {
-    elementSelectors.forEach(selector => {
-        document.querySelectorAll(selector).forEach(element => {
+    elementSelectors.forEach((selector) => {
+        document.querySelectorAll(selector).forEach((element) => {
             element.remove();
         });
     });
-};
+}

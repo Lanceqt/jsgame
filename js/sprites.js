@@ -7,7 +7,7 @@ export function generateSprite(spriteType) {
     let randomPos = Math.floor(Math.random() * (2 - 95 + 1)) + 95;
     const spriteId = crypto.randomUUID();
 
-    switch(spriteType) {
+    switch (spriteType) {
         case "heart":
             spriteShape = "❤️";
             break;
@@ -20,7 +20,14 @@ export function generateSprite(spriteType) {
         default:
             throw new Error(`${spriteType} is not a type of sprite`);
     }
-    return addElement("div", spriteShape, spriteId, "sprite-universals", "left", `${randomPos}vw`);
+    return addElement(
+        "div",
+        spriteShape,
+        spriteId,
+        "sprite-universals",
+        "left",
+        `${randomPos}vw`
+    );
 }
 
 export function generateRandomSprite(inputArray) {
@@ -28,7 +35,7 @@ export function generateRandomSprite(inputArray) {
     return inputArray[randomIndex];
 }
 
-export function handleSpriteClick(event){
+export function handleSpriteClick(event) {
     const targetSprite = event.target;
     if (targetSprite.classList.contains("sprite-universals")) {
         let spriteUId = targetSprite.getAttribute("data-id");
@@ -57,7 +64,9 @@ export function handleSpriteClick(event){
             return;
         }
         for (let i = 0; i < numberOfSprites; i++) {
-            const newSprite = generateSprite(generateRandomSprite(spriteObjects));
+            const newSprite = generateSprite(
+                generateRandomSprite(spriteObjects)
+            );
             fragment.appendChild(newSprite);
         }
         gameBoard.appendChild(fragment);

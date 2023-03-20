@@ -13,7 +13,10 @@
     src: url(Press_Start_2P/PressStart2P-Regular.ttf);
 }
 
-* { margin: 0; padding: 0; }
+* {
+    margin: 0;
+    padding: 0;
+}
 
 html {
     font-size: 62.5%;
@@ -21,6 +24,7 @@ html {
 
 body {
     font-size: 1.6rem;
+    color: white;
     font-family: "press-start-2p", sans-serif;
 }
 
@@ -87,7 +91,8 @@ h1 {
     cursor: pointer;
 }
 
-.score, .countdown {
+.score,
+.countdown {
     float: left;
     color: white;
     font-size: 2rem;
@@ -109,24 +114,24 @@ h1 {
 
 @keyframes dropSprites {
     from {
-      transform: translateY(0vh);
+        transform: translateY(0vh);
     }
-  
-    to {
-      transform: translateY(100vh);
-    }
-  }
 
-  @keyframes welcomeBlink {
+    to {
+        transform: translateY(100vh);
+    }
+}
+
+@keyframes welcomeBlink {
     0% {
-      opacity: 0%;
+        opacity: 0%;
     }
 
     50% {
-        opacity: 100%
+        opacity: 100%;
     }
-  
+
     100% {
-      opacity: 0%;
+        opacity: 0%;
     }
-  } 
+}

@@ -1,6 +1,6 @@
 async function loadHtmlTags() {
     try {
-        const response = await fetch("../json/htmlTavvgs.json");
+        const response = await fetch("../json/htmlTags.json");
         const data = await response.json();
         return new Set(data.htmlTags);
     } catch (error) {
@@ -10,6 +10,5 @@ async function loadHtmlTags() {
 
 export async function isValidHtmlTag(tag) {
     const validTags = await loadHtmlTags();
-    console.log(validTags);
     return validTags.has(tag.toLowerCase());
 }
