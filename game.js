@@ -1,4 +1,5 @@
-import { gameState } from "./js/GameState.js";
+// import { gameState } from "./js/GameState.js";
+import { spriteTypes } from "./js/sprites.js";
 // import { createElement, addToDOM } from "./js/elementHandlers.js";
 // import { addElement, removeElement } from "./js/elementHandlers.js";
 // import { generateSprite, generateRandomSprite, handleSpriteClick } from "./js/sprites.js";
@@ -6,8 +7,7 @@ import { gameState } from "./js/GameState.js";
 // import { gameState } from "./js/GameState.js";
 // let lifeTotal = 5;
 
-gameState.changeState("renderStartingScreen");
-gameState.changeState("renderMenuScreen");
+console.log(spriteTypes);
 
 // const testElement = await createElement("div", "element 1");
 // const testElement2 = await createElement("h1", "element 2");

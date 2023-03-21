@@ -19,7 +19,6 @@ export async function createElement(
     // ...(condition ? {propertyName: value} else {empty object})
     // ...(if both conditions are true, then {propertyName: {key: value}} else {})
     // ...(condition1 && condition2 ? {propertyName: {[key]: value}} : {empty})
-
     Object.assign(newElement, {
         ...(content ? { innerText: content } : {}),
         ...(CSSClass ? { className: CSSClass } : {}),
@@ -28,6 +27,7 @@ export async function createElement(
     if (elementId) {
         newElement.dataset.id = elementId;
     }
+
     // console.log(newElement.outerHTML);
     return newElement;
 }
