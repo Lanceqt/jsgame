@@ -11,13 +11,16 @@ export const gameState = {
 
 const gameBoard = {
     async renderStartingScreen() {
-        const title = await createElement("h1", "Clicky boom game", "title");
-        const start = await createElement(
-            "div",
-            "Welcome challenger - Press to play",
-            "start",
-            "welcome"
-        );
+        const title = await createElement({
+            elementType: "h1",
+            content: "Clicky boom game",
+            CSSClass: "title",
+        });
+        const start = await createElement({
+            elementType: "div",
+            content: "Welcome challenger - Press to play",
+            CSSClass: "welcome",
+        });
         addToDOM(parentElement, [title, start]);
         // fragment.appendChild(addElement("h1", "Clicky boom game", "title"));
         // fragment.appendChild(
