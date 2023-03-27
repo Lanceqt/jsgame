@@ -1,11 +1,35 @@
 import { createElement, addToDOM } from "./elementHandlers.js";
-import { bombSound, lifeSound, pointSound } from "./audio.js";
+import { playSound } from "./audio.js";
 const spriteObjects = ["coin", "bomb", "heart"];
 
 export const spriteTypes = {
     heart: "❤️",
     coin: "🪙",
     bomb: "💣",
+};
+
+export const sprites = {
+    heart: {
+        shape: spriteTypes.heart,
+        onClick: (event) => {
+            playSound("heart");
+            event.target.remove();
+        },
+    },
+    coin: {
+        shape: spriteTypes.coin,
+        onClick: (event) => {
+            playSound("coin");
+            event.target.remove();
+        },
+    },
+    bomb: {
+        shape: spriteTypes.bomb,
+        onClick: (event) => {
+            playSound("bomb");
+            event.target.remove();
+        },
+    },
 };
 
 // export function generateSprite(spriteType) {

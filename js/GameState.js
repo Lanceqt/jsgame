@@ -1,5 +1,15 @@
 import { createElement, addToDOM } from "./elementHandlers.js";
+
+/** @type {HTMLElement} The parent element on which the game will be rendered. */
 const parentElement = document.querySelector("#game-board");
+
+/**
+ * The game state object, containing the current state, gameBoard, and a method to change the state.
+ * @type {Object}
+ * @property {string} state - The current state of the game.
+ * @property {Object} gameBoard - An object containing functions to render different game states.
+ * @property {function} changeState - A function to change the game state and render the new state.
+ */
 export const gameState = {
     state: "startingScreen",
     gameBoard: {},
