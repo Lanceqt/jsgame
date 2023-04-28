@@ -1,7 +1,16 @@
 /**
- * @let {set} validTags - A set of valid HTML tags
+ * @typedef {Object} HtmlTags
+ * @property {string[]} htmlTags - An array of valid HTML tags
  */
-let validTags = null;
+
+/**
+ * Loads the valid HTML tags from a JSON file and returns a set of the tags.
+ *
+ * @function loadHtmlTags
+ * @async
+ * @returns {Promise<Set<string>>} - A promise that resolves to a set of valid HTML tags
+ * @throws {Error} - If there is an error loading the JSON file
+ */
 
 async function loadHtmlTags() {
     try {
@@ -14,6 +23,14 @@ async function loadHtmlTags() {
     }
 }
 
+/**
+ * Checks if the provided tag is a valid HTML tag.
+ *
+ * @function isValidHtmlTag
+ * @async
+ * @param {string} tag - The tag to be checked
+ * @returns {Promise<boolean>} - A promise that resolves to a boolean indicating if the tag is valid
+ */
 export async function isValidHtmlTag(tag) {
     if (!validTags) {
         validTags = await loadHtmlTags();
